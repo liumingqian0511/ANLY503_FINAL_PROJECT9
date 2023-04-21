@@ -1,3 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
+		<title>Smoothed D3.js Radar Chart</title>
+
+		<!-- Google fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+
+		<!-- D3.js -->
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		
+		<style>
+			body {
+				font-family: 'Open Sans', sans-serif;
+				font-size: 11px;
+				font-weight: 300;
+				fill: #242424;
+				text-align: center;
+				text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+				cursor: default;
+			}
+			
+			.legend {
+            position: fixed;
+            top: 0;
+            right: 0;
+            text-align: left;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: white;
+            padding: 10px;
+            }
+
+            .legend h4 {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            }
+
+            .legend ul {
+            list-style: none;
+            margin: 2;
+            padding: 0;
+            }
+
+            .legend li {
+            margin-bottom: 5px;
+            line-height: 1.2;
+            }
+
+            .legend .square {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin-right: 5px;
+            vertical-align: middle;
+            }
+			
+			.tooltip {
+				fill: #272727;
+                color: aliceblue;
+			}
+		</style>
+	
+	</head>
+	<body>
+
+		<div class="radarChart"></div>
+
+		<script src="radarChart.js"></script>	
+		<script>
       
       /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
       /* Updated for d3.js v4 by Ingo Kleiber <ingo@kleiber.me> */
@@ -91,3 +163,16 @@
 
 			//Call function to draw the Radar chart
 			RadarChart(".radarChart", data, radarChartOptions);
+		</script>
+        <div class="legend">
+            <h4>Price Range</h4>
+            <ul>
+              <li><span class="square" style="background-color: #00C691"></span> Free</li>
+              <li><span class="square" style="background-color: #8F52D2"></span> $1-$10</li>
+              <li><span class="square" style="background-color: #FB9E58"></span> $10-$20</li>
+              <li><span class="square" style="background-color: #62B6CB"></span> $20-$50</li>
+              <li><span class="square" style="background-color: #F77670"></span> $50-$500</li>
+            </ul>
+          </div>
+	</body>
+</html>

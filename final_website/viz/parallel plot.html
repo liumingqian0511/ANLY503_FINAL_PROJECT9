@@ -3,16 +3,42 @@
 <head>
 	<title>My Plot</title>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://d3js.org/d3.v4.min.js"></script>
+    <style>
+        #brushes {
+        font-size: 18px;
+        margin-top: 10px;
+        display: absolute;
+        align-items: right;
+        justify-content: right;
+    }
+    #brushes input[type=radio] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        outline: none;
+        border: 2px solid #999;
+        cursor: pointer;
+    }
+    #brushes input[type=radio]:checked {
+        background-color: #999;
+    }
+    #brushes input[type=radio]:hover {
+        background-color: #ccc;
+    }
+    </style>
 </head>
 <body>
     <div id="brushes">
-        <input type="radio" id="r1" name="rate" value="0"> Erase
-        <input type="radio" id="r2" name="rate" value="1"> Red
-        <input type="radio" id="r3" name="rate" value="2"> Blue
-        <input type="radio" id="r4" name="rate" value="3"> Orange
-        <input type="radio" id="r5" name="rate" value="4" checked="checked"> Green
+        <input type="radio" id="r1" name="rate" value="0" checked="checked"> Initical
+        <input type="radio" id="r2" name="rate" value="1"> Choice 1
+        <input type="radio" id="r3" name="rate" value="2"> Choice 2
     </div>
+
 	<div id="myDiv"></div>
 
 	<script>
@@ -47,18 +73,16 @@
 
             // Colors
             var color = new Int8Array(gameData.length);
-            var colorscale = [[0, '#D3D3D3'], [0.2, '#D3D3D3'],
-                            [0.2, '#EF553B'], [0.4, '#EF553B'],
-                            [0.4, '#00CC96'], [0.6, '#00CC96'],
-                            [0.6, '#AB63FA'], [0.8, '#AB63FA'],
-                            [0.8, '#FFA15A'], [1.0, '#FFA15A']];
+            var colorscale = [[0, '#D3D3D3'], [0.33, '#D3D3D3'],
+                            [0.33, '#0FDDE5'], [0.66, '#0FDDE5'],
+                            [0.66, '#F77670'], [1.0, '#F77670']];
 
             // Layout
             var layout = {
             width: 1000,
             height: 1000,
-            xaxis: {title: 'User_Score'},
-            yaxis: {domain: [0.6, 1], title: 'Critic_Score'},
+            xaxis: {title: 'User Score'},
+            yaxis: {domain: [0.6, 1], title: 'Critic Score'},
             dragmode: 'lasso',
             hovermode: 'closest'
             };
@@ -71,22 +95,23 @@
             marker: {color: color,
                         colorscale: colorscale,
                         cmin: -0.5,
-                        cmax: 4.5,
+                        cmax: 2.5,
                         showscale: true,
-                        colorbar: {tickvals: [0, 1, 2, 3, 4],
-                                ticktext: ['Gray', 'Red', 'Blue','Orange', 'Green']}},
+                        colorbar: {tickvals: [0, 1, 2],
+                                ticktext: ['Initial','Choice 1', 'Choice 2']}},
             mode: 'markers',
             },
             {type: 'parcats',
-            domain: {y: [0, 0.4]},
+            domain: {y: [0, 0.5]},
             dimensions:categoricalDimensions,
             line: {
                 colorscale: colorscale,
                 cmin: -0.5,
-                cmax: 4.5,
+                cmax: 2.5,
                 color: color,
                 shape: 'hspline'},
-            labelfont: {size: 16}
+            labelfont: {size: 16},
+            margin: {t: 10, r: 20, b: 20, l: 20}
             }
             ];
 

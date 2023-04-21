@@ -47,8 +47,8 @@ Tooltip
 var mousemove = function(d) {
 Tooltip
     .html('<u>' + d.names + '</u>' + "<br>" +'Game Price: '+ d.price + "<br>" +'Game Discription: '+ d.discription + "<br>"+ d.imagehtml)
-    .style("left", (d3.mouse(this)[0]+20) + "px")
-    .style("top", (d3.mouse(this)[1]) + "px")
+    .style("left", (d3.mouse(this)[0]+50) + "px")
+    .style("top", (d3.mouse(this)[1]+350) + "px")
 }
 var mouseleave = function(d) {
 Tooltip

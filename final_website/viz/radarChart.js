@@ -1,25 +1,19 @@
-/////////////////////////////////////////////////////////
-/////////////// The Radar Chart Function ////////////////
-/////////////// Written by Nadieh Bremer ////////////////
-////////////////// VisualCinnamon.com ///////////////////
-//////////Updated for d3.js v4 by Ingo Kleiber //////////
-/////////// Inspired by the code of alangrafu ///////////
-/////////////////////////////////////////////////////////
+
 	
 function RadarChart(id, data, options) {
 	var cfg = {
-	 w: 600,				//Width of the circle
-	 h: 600,				//Height of the circle
+	 w: 500,				//Width of the circle
+	 h: 500,				//Height of the circle
 	 margin: {top: 20, right: 20, bottom: 20, left: 20}, //The margins of the SVG
-	 levels: 3,				//How many levels or inner circles should there be drawn
+	 levels: 4,				//How many levels or inner circles should there be drawn
 	 maxValue: 0, 			//What is the value that the biggest circle will represent
-	 labelFactor: 1.25, 	//How much farther than the radius of the outer circle should the labels be placed
+	 labelFactor: 1.15, 	//How much farther than the radius of the outer circle should the labels be placed
 	 wrapWidth: 60, 		//The number of pixels after which a label needs to be given a new line
 	 opacityArea: 0.35, 	//The opacity of the area of the blob
 	 dotRadius: 4, 			//The size of the colored circles of each blog
 	 opacityCircles: 0.1, 	//The opacity of the circles of each blob
-	 strokeWidth: 2, 		//The width of the stroke around each blob
-	 roundStrokes: false,	//If true the area and stroke will follow a round path (cardinal-closed)
+	 strokeWidth: 4, 		//The width of the stroke around each blob
+	 roundStrokes: true,	//If true the area and stroke will follow a round path (cardinal-closed)
 	 color: d3.schemeCategory10	//Color function
 	};
 	
@@ -36,7 +30,7 @@ function RadarChart(id, data, options) {
 	var allAxis = (data[0].map(function(i, j){return i.axis})),	//Names of each axis
 		total = allAxis.length,					//The number of different axes
 		radius = Math.min(cfg.w/2, cfg.h/2), 	//Radius of the outermost circle
-		Format = d3.format('%'),			 	//Percentage formatting
+		Format = d3.format('.0%'),			 	//Percentage formatting
 		angleSlice = Math.PI * 2 / total;		//The width in radians of each "slice"
 	
 	//Scale for the radius
@@ -51,14 +45,39 @@ function RadarChart(id, data, options) {
 	//Remove whatever chart with the same id/class was present before
 	d3.select(id).select("svg").remove();
 	
+
 	//Initiate the radar chart SVG
-	var svg = d3.select(id).append("svg")
+	var svg = d3.select(id)
+			.append("svg")
 			.attr("width",  cfg.w + cfg.margin.left + cfg.margin.right)
 			.attr("height", cfg.h + cfg.margin.top + cfg.margin.bottom)
 			.attr("class", "radar"+id);
 	//Append a g element		
+	var defs = svg.append("defs");
+
+	defs.append("pattern")
+		.attr("id", "icon1")
+		.attr("width", 20)
+		.attr("height", 20)
+		.append("image")
+		.attr("xlink:href", "/Users/xiangxin/2023-anly503-xx123/ANLY503_FINAL_PROJECT/image/indie_icon.png")
+		.attr("width", 20)
+		.attr("height", 20);
+
+	defs.append("pattern")
+		.attr("id", "icon2")
+		.attr("width", 20)
+		.attr("height", 20)
+		.append("image")
+		.attr("xlink:href", "/Users/xiangxin/2023-anly503-xx123/ANLY503_FINAL_PROJECT/image/indie_icon.png")
+		.attr("width", 20)
+		.attr("height", 20);
+
+
+		
 	var g = svg.append("g")
 			.attr("transform", "translate(" + (cfg.w/2 + cfg.margin.left) + "," + (cfg.h/2 + cfg.margin.top) + ")");
+
 	
 	/////////////////////////////////////////////////////////
 	////////// Glow filter for some extra pizzazz ///////////
@@ -97,10 +116,10 @@ function RadarChart(id, data, options) {
 	   .attr("class", "axisLabel")
 	   .attr("x", 4)
 	   .attr("y", function(d){return -d*radius/cfg.levels;})
-	   .attr("dy", "0.4em")
-	   .style("font-size", "10px")
+	   .attr("dy", "0.2em")
+	   .style("font-size", "12px")
 	   .attr("fill", "#737373")
-	   .text(function(d,i) { return Format(maxValue * d/cfg.levels); });
+	   .text(function(d,i) { return Format(maxValue * d/cfg.levels);});
 
 	/////////////////////////////////////////////////////////
 	//////////////////// Draw the axes //////////////////////
@@ -122,10 +141,26 @@ function RadarChart(id, data, options) {
 		.style("stroke", "white")
 		.style("stroke-width", "2px");
 
+	// 给每个axis添加图标
+	axis.append("rect")
+		.attr("x", -10)
+		.attr("y", -10)
+		.attr("width", 20)
+		.attr("height", 20)
+		.style("fill", function(d) {
+			if (d === "axis") {
+				return "url(#icon1)";
+			} else if (d === "axis") {
+				return "url(#icon2)";
+			} else {
+				return "none";
+			}
+		});
+
 	//Append the labels at each axis
 	axis.append("text")
 		.attr("class", "legend")
-		.style("font-size", "11px")
+		.style("font-size", "16px")
 		.attr("text-anchor", "middle")
 		.attr("dy", "0.35em")
 		.attr("x", function(d, i){ return rScale(maxValue * cfg.labelFactor) * Math.cos(angleSlice*i - Math.PI/2); })
@@ -194,7 +229,7 @@ function RadarChart(id, data, options) {
 		.attr("r", cfg.dotRadius)
 		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
-		.style("fill", function(d,i,j) { return cfg.color(j); })
+		.style("fill", "none")
 		.style("fill-opacity", 0.8);
 
 	/////////////////////////////////////////////////////////
@@ -212,7 +247,7 @@ function RadarChart(id, data, options) {
 		.data(function(d,i) { return d; })
 		.enter().append("circle")
 		.attr("class", "radarInvisibleCircle")
-		.attr("r", cfg.dotRadius*1.5)
+		.attr("r", cfg.dotRadius*1)
 		.attr("cx", function(d,i){ return rScale(d.value) * Math.cos(angleSlice*i - Math.PI/2); })
 		.attr("cy", function(d,i){ return rScale(d.value) * Math.sin(angleSlice*i - Math.PI/2); })
 		.style("fill", "none")
@@ -224,15 +259,16 @@ function RadarChart(id, data, options) {
 			tooltip
 				.attr('x', newX)
 				.attr('y', newY)
-				.text(Format(d.value))
-				.transition().duration(200)
-				.style('opacity', 1);
+				.text(d.axis+" "+Format(d.value))
+				.transition().duration(50)
+				.style('opacity', 1)
+				.style('color','red');
 		})
 		.on("mouseout", function(){
-			tooltip.transition().duration(200)
+			tooltip.transition().duration(50)
 				.style("opacity", 0);
 		});
-		
+	
 	//Set up the small tooltip for when you hover over a circle
 	var tooltip = g.append("text")
 		.attr("class", "tooltip")
