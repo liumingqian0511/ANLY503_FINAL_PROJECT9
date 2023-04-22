@@ -35,7 +35,7 @@ function(gameData) {
 
     // Layout
     var layout = {
-    width: 1000,
+    width: 800,
     height: 1000,
     xaxis: {title: 'User Score'},
     yaxis: {domain: [0.6, 1], title: 'Critic Score'},

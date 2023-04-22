@@ -1,10 +1,8 @@
-Author: 		KeenThemes
-Website: 		http://www.keenthemes.com/
-Contact: 		support@keenthemes.com
-Follow: 		http://twitter.com/keenthemes
-Like: 			http://facebook.com/keenthemes
+<!-- ==============================
+    Project:        ANLY-503 GROUP9
+    Version:        1.0
+    Author:         Yanfeng Zhang, Mingqian Liu, Xin Xiang
+================================== -->
 
-Looking for a perfect premium bootstrap admin theme for your project ? You got to check Metronic, our #1 selling admin theme in the market: 
-http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-
-Happy coding!  Don't miss a stuff from us - http://twitter.com/keenthemes
+HTML Template: Aircv
+Theme Powered by: KeenThemes.com
