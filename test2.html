@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    /* 默认的工具提示样式 */
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      top: -5px;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent #555 transparent;
+    }
+
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      z-index: 1;
+      top: -30px;
+      left: 50%;
+      margin-left: -50px;
+      padding: 5px;
+      background-color: #555;
+      color: white;
+      border-radius: 5px;
+      font-size: 12px;
+      white-space: nowrap;
+      display: none;
+    }
+
+    .tooltip:hover::after {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="tooltip" data-tooltip="Hello World!">
+    Hover over me!
+  </div>
+
+  <script>
+    // 更改工具提示的背景颜色
+    var tooltip = document.querySelector('.tooltip');
+    var tooltipStyle = window.getComputedStyle(tooltip, '::after');
+    tooltipStyle.backgroundColor = 'red';
+  </script>
+
+</body>
+</html>
